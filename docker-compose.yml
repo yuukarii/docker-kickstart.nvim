@@ -1,0 +1,8 @@
+services:
+  neovimXdocker:
+    image: nvim-dev
+    container_name: nvim-dev
+    restart: unless-stopped
+    volumes:
+      - /data/MyData/7-repos/docker-kickstart.nvim:/home/dev/.config/nvim
+      - /data/MyData/7-repos/cybersec-practice:/workspace
