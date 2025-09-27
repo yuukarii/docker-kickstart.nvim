@@ -141,8 +141,10 @@ vim.o.timeoutlen = 300
 vim.o.splitright = true
 vim.o.splitbelow = true
 
--- Use spaces instead of tabs
-vim.opt.expandtab = true
+vim.opt.expandtab = true -- Use spaces instead of tabs
+vim.opt.shiftwidth = 4 -- Number of spaces for each indentation
+vim.opt.tabstop = 4 -- Number of spaces a <Tab> counts for
+vim.opt.softtabstop = 4 -- Number of spaces inserted/deleted with <Tab>/<BS>
 
 -- Sets how neovim will display certain whitespace characters in the editor.
 --  See `:help 'list'`

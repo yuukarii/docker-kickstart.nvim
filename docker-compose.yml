@@ -5,4 +5,4 @@ services:
     restart: unless-stopped
     volumes:
       - /data/MyData/7-repos/docker-kickstart.nvim:/home/dev/.config/nvim
-      - /data/MyData/7-repos/cybersec-practice:/workspace
+      - /data/MyData/7-repos:/workspace

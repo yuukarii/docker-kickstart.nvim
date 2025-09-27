@@ -1,8 +1,6 @@
 local home = os.getenv 'HOME'
 local workspace_dir = vim.fn.fnamemodify(vim.fn.getcwd(), ':p:h:t')
 
-local jdtls_bin = '/opt/jdtls/bin/jdtls'
-
 local java21_path = '/usr/lib/jvm/java-21-openjdk-amd64'
 
 local workspace_path = home .. '/.local/share/eclipse/' .. workspace_dir
