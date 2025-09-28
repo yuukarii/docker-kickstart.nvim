@@ -41,6 +41,6 @@ docker run -d --name nvim-workspace --restart unless-stopped \
 
 Add this alias into your `.bashrc` or `.zshrc`:
 ```bash
-alias nvim="docker run -it --rm -v $(pwd):/workspace nvim-dev"
-alias nvim-workspace="docker run -d --name nvim-workspace --restart unless-stopped -v $(pwd):/workspace nvim-dev"
+alias nvim="docker run -it --rm -v \$(pwd):/workspace nvim-dev"
+alias nvim-workspace="docker run -d --name nvim-workspace --restart unless-stopped -v \$(pwd):/workspace nvim-dev"
 ```
