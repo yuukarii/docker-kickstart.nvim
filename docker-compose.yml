@@ -1,8 +1,16 @@
 services:
   neovimXdocker:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        USER_UID: "${USER_UID}"
+        USER_GID: "${USER_GID}"
+        ENABLE_JAVA: "${ENABLE_JAVA}"
     image: nvim-dev
     container_name: nvim-dev
     restart: unless-stopped
     volumes:
-      - /data/MyData/7-repos/docker-kickstart.nvim:/home/dev/.config/nvim
-      - /data/MyData/7-repos:/workspace
+      - ${CONFIG_PATH}:/home/dev/.config/nvim
+      - ${WORKSPACE_PATH}:/workspace
+    tty: true

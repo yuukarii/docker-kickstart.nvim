@@ -25,18 +25,19 @@ docker build -t nvim-dev .
 
 Spawn by `docker run` command:
 ```bash
-docker run -d \
+docker run -d --name nvim-dev --restart unless-stopped \
   -v $(pwd):/home/dev/.config/nvim \
   -v <some-path>:/workspace \
   nvim-dev
 ```
 
-Spawn by `docker compose` command (remember to modify the paths)
+Build and run by `docker compose` command (remember to modify the value in `env` file)
 ```bash
-docker compose up -d
+cp env .env
+docker compose up -d --build
 ```
 
 Add this line into your `.bashrc` or `.zshrc`:
 ```bash
-alias nvim="docker exec -it nvim-dev nvim /workspace"
+alias nvim="docker exec -it nvim-dev /bin/bash"
 ```
