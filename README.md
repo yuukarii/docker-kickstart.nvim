@@ -21,23 +21,26 @@ Configure your terminal to use this font.
 Build the container image:
 ```bash
 docker build -t nvim-dev .
+
+# or
+
+docker build --build-arg ENABLE_JAVA=false \
+  --build-arg USER_UID=1000 --build-arg USER_GID=1000 \
+  -t nvim-dev .
 ```
 
-Spawn by `docker run` command:
+Open `nvim` by `docker run` command:
 ```bash
-docker run -d --name nvim-dev --restart unless-stopped \
-  -v $(pwd):/home/dev/.config/nvim \
-  -v <some-path>:/workspace \
-  nvim-dev
+docker run -it --rm -v $(pwd):/workspace nvim-dev
+
+# or if you want it to be persistent
+
+docker run -d --name nvim-workspace --restart unless-stopped \
+  -v $(pwd):/workspace nvim-dev
 ```
 
-Build and run by `docker compose` command (remember to modify the value in `env` file)
+Add this alias into your `.bashrc` or `.zshrc`:
 ```bash
-cp env .env
-docker compose up -d --build
-```
-
-Add this line into your `.bashrc` or `.zshrc`:
-```bash
-alias nvim="docker exec -it nvim-dev /bin/bash"
+alias nvim="docker run -it --rm -v $(pwd):/workspace nvim-dev"
+alias nvim-workspace="docker run -d --name nvim-workspace --restart unless-stopped -v $(pwd):/workspace nvim-dev"
 ```

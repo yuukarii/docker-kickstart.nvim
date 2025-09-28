@@ -26,8 +26,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 
 # Create non-root user
 RUN groupadd --gid ${USER_GID} dev \
-    && useradd --uid ${USER_UID} --gid ${USER_GID} -m dev \
-    && mkdir -p /home/dev/.config/nvim
+    && useradd --uid ${USER_UID} --gid ${USER_GID} -m dev
 
 # Install nvim
 RUN wget https://github.com/neovim/neovim/releases/latest/download/nvim-linux-x86_64.tar.gz \
@@ -40,7 +39,7 @@ RUN wget https://github.com/neovim/neovim/releases/latest/download/nvim-linux-x8
 
 # Conditionally install Python and Java support
 RUN wget -qO- https://deb.nodesource.com/setup_22.x | bash - \
-    && apt-get install -y --no-install-recommends nodejs \
+    && apt-get install -y --no-install-recommends python3-venv python3-pip nodejs \
     && if [ "$ENABLE_JAVA" = "true" ]; then \
         wget -qO- https://apt.corretto.aws/corretto.key | gpg --dearmor -o /usr/share/keyrings/corretto-keyring.gpg \
         && echo "deb [signed-by=/usr/share/keyrings/corretto-keyring.gpg] https://apt.corretto.aws stable main" > /etc/apt/sources.list.d/corretto.list \
@@ -54,7 +53,10 @@ RUN wget -qO- https://deb.nodesource.com/setup_22.x | bash - \
 
 # Set working directory
 USER dev
-WORKDIR /home/dev
 
-ENTRYPOINT ["/usr/bin/tini", "--"]
-CMD ["sleep", "infinity"]
+RUN mkdir -p /home/dev/.config/nvim \
+    && git clone https://github.com/yuukarii/docker-kickstart.nvim.git /home/dev/.config/nvim \
+    && nvim --headless "+Lazy! sync" +qa \
+    && nvim --headless "+MasonToolsInstallSync" +qa
+
+CMD ["nvim"]
