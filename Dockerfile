@@ -26,7 +26,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 
 # Create non-root user
 RUN groupadd --gid ${USER_GID} dev \
-    && useradd --uid ${USER_UID} --gid ${USER_GID} -m dev
+    && useradd --uid ${USER_UID} --gid ${USER_GID} -m dev \
+    && mkdir /workspace
 
 # Install nvim
 RUN wget https://github.com/neovim/neovim/releases/latest/download/nvim-linux-x86_64.tar.gz \
@@ -53,6 +54,7 @@ RUN wget -qO- https://deb.nodesource.com/setup_22.x | bash - \
 
 # Set working directory
 USER dev
+WORKDIR /workspace
 
 RUN mkdir -p /home/dev/.config/nvim \
     && git clone https://github.com/yuukarii/docker-kickstart.nvim.git /home/dev/.config/nvim \
