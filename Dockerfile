@@ -1,5 +1,5 @@
 # Use a small base image with package manager
-FROM debian:stable-slim
+FROM debian:trixie-20250908-slim
 
 # Build arguments
 ARG USER_UID
@@ -30,7 +30,7 @@ RUN groupadd --gid ${USER_GID} dev \
     && mkdir /workspace
 
 # Install nvim
-RUN wget https://github.com/neovim/neovim/releases/latest/download/nvim-linux-x86_64.tar.gz \
+RUN wget https://github.com/neovim/neovim/releases/download/v0.11.4/nvim-linux-x86_64.tar.gz \
     && rm -rf /opt/nvim-linux-x86_64 \
     && mkdir -p /opt/nvim-linux-x86_64 \
     && chmod a+rX /opt/nvim-linux-x86_64 \

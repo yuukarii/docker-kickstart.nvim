@@ -40,3 +40,10 @@ Add this alias into your `.bashrc` or `.zshrc`:
 alias nvim="docker run -it --rm -v \$(pwd):/workspace nvim-dev"
 alias nvim-workspace="docker exec -it nvim-workspace nvim"
 ```
+
+If you want to update the `lazy-lock.json` file, mount this repo when create the container:
+```bash
+docker run -it --rm -v $(pwd):/home/dev/.config/nvim nvim-dev
+```
+
+Then execute Lazy and Mason update.
