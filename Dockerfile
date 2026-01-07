@@ -24,7 +24,6 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     tar \
     git \
     wget ca-certificates \
-    tini \
     python3 \
     && rm -rf /var/lib/apt/lists/*
 
@@ -58,13 +57,17 @@ RUN if [ "$ENABLE_JAVA" = "true" ]; then \
         && rm -rf /var/lib/apt/lists/* ; \
     fi
 
+# Copy some dirs
+# RUN mkdir -p /afs/xx/xx/xx/8.0.462
+# COPY 8.0.462 /afs/xx/xx/xx/8.0.462
+
 # Set working directory
 USER dev
 WORKDIR /workspace
 
 RUN mkdir -p /home/dev/.config/nvim \
     && git clone https://github.com/yuukarii/docker-kickstart.nvim.git /home/dev/.config/nvim \
-    && nvim --headless "+Lazy! sync" +qa \
-    && nvim --headless "+MasonToolsInstallSync" +qa
+    ; nvim --headless "+Lazy! sync" +qa \
+    ; nvim --headless "+MasonToolsInstallSync" +qa
 
-CMD ["nvim"]
+CMD ["/bin/bash"]
