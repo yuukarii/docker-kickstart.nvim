@@ -31,7 +31,7 @@ docker run -it --rm -v $(pwd):/workspace nvim-dev
 
 # or if you want it to be persistent with a folder
 
-docker run -d --name nvim-workspace --restart unless-stopped \
+docker run -t -d --name nvim-workspace --restart unless-stopped \
   -v $(pwd):/workspace nvim-dev
 ```
 
