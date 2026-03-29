@@ -20,6 +20,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     gcc build-essential libc6-dev\
     ripgrep \
     fd-find \
+    tree-sitter-cli \
     unzip \
     tar \
     git \
@@ -65,9 +66,11 @@ RUN if [ "$ENABLE_JAVA" = "true" ]; then \
 USER dev
 WORKDIR /workspace
 
+ARG MASON_PACKAGES="lua-language-server stylua bash-language-server pyright"
+
 RUN mkdir -p /home/dev/.config/nvim \
     && git clone https://github.com/yuukarii/docker-kickstart.nvim.git /home/dev/.config/nvim \
-    ; nvim --headless "+Lazy! sync" +qa \
-    ; nvim --headless "+MasonToolsInstallSync" +qa
+    && HOME=/home/dev XDG_CONFIG_HOME=/home/dev/.config nvim --headless "+Lazy! sync" +qa \
+    && HOME=/home/dev XDG_CONFIG_HOME=/home/dev/.config nvim --headless -c "MasonInstall ${MASON_PACKAGES}" -c "qall"
 
 CMD ["/bin/bash"]
